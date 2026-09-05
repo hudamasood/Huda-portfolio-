@@ -115,41 +115,13 @@ function Magnet({ children, padding = 150, strength = 3 }) {
   );
 }
 
-// ── AnimatedText ──────────────────────────────────────────────────────────────
-function AnimatedChar({ char, start, end, scrollYProgress }) {
-  const opacity = useTransform(scrollYProgress, [start, end], [0.2, 1]);
-
-  return (
-    <span style={{ position: "relative", display: "inline" }}>
-      <span style={{ opacity: 0 }}>
-        {char}
-      </span>
-
-      <motion.span
-        style={{
-          position: "absolute",
-          left: 0,
-          top: 0,
-          opacity,
-        }}
-      >
-        {char}
-      </motion.span>
-    </span>
-  );
-}
-
+// ── AboutText ─────────────────────────────────────────────────────────────────
+// Plain, static paragraph. The previous version split the text into per-character
+// spans whose opacity was driven by scroll progress; that scroll-based
+// highlighting is removed. Typography and layout are unchanged.
 function AnimatedText({ text, className = "" }) {
-  const ref = useRef(null);
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ["start 0.8", "end 0.2"],
-  });
-  const chars = text.split("");
-
   return (
-    <p ref={ref} className={className} style={{
-      position: "relative",
+    <p className={className} style={{
       color: "#D7E2EA",
       fontWeight: 500,
       textAlign: "center",
@@ -157,20 +129,7 @@ function AnimatedText({ text, className = "" }) {
       maxWidth: 560,
       fontSize: "clamp(1rem, 2vw, 1.35rem)",
     }}>
-      {chars.map((char, i) => {
-        const start = i / chars.length;
-        const end = (i + 1) / chars.length;
-
-        return (
-          <AnimatedChar
-            key={i}
-            char={char}
-            start={start}
-            end={end}
-            scrollYProgress={scrollYProgress}
-          />
-        );
-      })}
+      {text}
     </p>
   );
 }
