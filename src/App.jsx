@@ -432,16 +432,23 @@ function HeroSection() {
 
 // ── MarqueeSection ────────────────────────────────────────────────────────────
 const gifImages = [
+  // ResolveIQ
   "/project-images/RE.PNG",
   "/project-images/RE2.PNG",
   "/project-images/RE3.PNG",
+  // ME. AI Skin & Scalp
   "/project-images/ME1.PNG",
   "/project-images/ME-col1a.jpeg",
   "/project-images/ME-col1b.jpeg",
   "/project-images/ME-col2.jpeg",
+  // Job Portal System
   "/project-images/Job-Portal-col1a.jpeg",
   "/project-images/Job-Portal-col1b.jpeg",
   "/project-images/Job-Portal-col2.jpeg",
+  // Marrow & Hearth Restaurant
+  "/project-images/Restaurant-col1a.jpeg",
+  "/project-images/Restaurant-col1b.jpeg",
+  "/project-images/Restaurant-col2.jpeg",
 ];
 
 function MarqueeSection() {
@@ -461,28 +468,27 @@ function MarqueeSection() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  // Keep both marquee rows populated and mix ResolveIQ, ME, and Job Portal
-  // throughout each row so the projects stay visible while the original
-  // two-line scroll movement remains unchanged.
+  // Keep both marquee rows populated and rotate ResolveIQ, ME, Job Portal and
+  // Restaurant evenly through each row (three tiles per project) so every
+  // project gets equal presence. The original two-line scroll movement is
+  // unchanged; row 2 starts on Restaurant so it reads early from either side.
   const row1Base = [
-    gifImages[0], gifImages[3], gifImages[7],
-    gifImages[1], gifImages[4], gifImages[8],
-    gifImages[2], gifImages[5], gifImages[9],
-    gifImages[0], gifImages[6], gifImages[7],
+    gifImages[0], gifImages[3], gifImages[7], gifImages[10],
+    gifImages[1], gifImages[4], gifImages[8], gifImages[11],
+    gifImages[2], gifImages[5], gifImages[9], gifImages[12],
   ];
   const row2Base = [
-    gifImages[9], gifImages[2], gifImages[4],
-    gifImages[8], gifImages[0], gifImages[6],
-    gifImages[7], gifImages[1], gifImages[3],
-    gifImages[8], gifImages[2], gifImages[5],
+    gifImages[12], gifImages[2], gifImages[6], gifImages[9],
+    gifImages[10], gifImages[0], gifImages[4], gifImages[8],
+    gifImages[11], gifImages[1], gifImages[5], gifImages[7],
   ];
 
   const row1 = [...row1Base, ...row1Base, ...row1Base];
   const row2 = [...row2Base, ...row2Base, ...row2Base];
 
   const tileStyle = {
-    width: 420,
-    height: 270,
+    width: 336,
+    height: 216,
     borderRadius: 16,
     objectFit: "cover",
     flexShrink: 0,
