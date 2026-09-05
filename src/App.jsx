@@ -174,21 +174,32 @@ function AnimatedText({ text, className = "" }) {
     </p>
   );
 }
-// ── ContactButton ─────────────────────────────────────────────────────────────
+// ── scrollToSection — smooth in-page navigation ───────────────────────────────
+// Plain `href="#id"` anchors only scroll when the hash actually changes, so
+// clicking a link for the section you are already on does nothing. Handling the
+// click directly makes every click scroll, and keeps the URL hash in sync.
+function scrollToSection(e, id) {
+  const target = document.getElementById(id);
+  if (!target) return;
+  e.preventDefault();
+  target.scrollIntoView({ behavior: "smooth", block: "start" });
+  window.history.replaceState(null, "", `#${id}`);
+}
+
+// ── ContactButton — styled to match the GitHub button in AboutSection ─────────
 function ContactButton() {
   return (
     <a
       href="#contact"
+      onClick={(e) => scrollToSection(e, "contact")}
       style={{
-        display: "inline-block",
-        background: "linear-gradient(123deg, #18011F 7%, #B600A8 37%, #7621B0 72%, #BE4C00 100%)",
-        boxShadow: "0px 4px 4px rgba(181,1,167,0.25), inset 4px 4px 12px #7721B1",
-        outline: "2px solid white",
-        outlineOffset: "-3px",
+        display: "inline-flex",
+        alignItems: "center",
+        gap: 8,
         borderRadius: "9999px",
-        border: "none",
-        cursor: "pointer",
-        color: "white",
+        border: "2px solid #D7E2EA",
+        background: "transparent",
+        color: "#D7E2EA",
         fontFamily: "'Kanit', sans-serif",
         fontWeight: 500,
         textTransform: "uppercase",
@@ -196,7 +207,10 @@ function ContactButton() {
         padding: "clamp(10px,1.2vw,16px) clamp(28px,3vw,48px)",
         fontSize: "clamp(0.7rem, 1.1vw, 1rem)",
         textDecoration: "none",
+        transition: "background 0.2s",
       }}
+      onMouseEnter={(e) => (e.currentTarget.style.background = "rgba(215,226,234,0.08)")}
+      onMouseLeave={(e) => (e.currentTarget.style.background = "transparent")}
     >
       Contact Me
     </a>
@@ -304,6 +318,7 @@ function HeroSection() {
             <a
               key={link}
               href={`#${link.toLowerCase()}`}
+              onClick={(e) => scrollToSection(e, link.toLowerCase())}
               style={{
                 color: "#D7E2EA",
                 fontWeight: 500,
