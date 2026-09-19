@@ -97,17 +97,17 @@ Show me the hero (screenshots at desktop and mobile widths, or tell me to run it
 
 Goal: keep a glimpse of the work under the hero, remove the motion.
 
-- [ ] Reduce to a single row.
-- [ ] Thumbnails 120–140px tall, consistent aspect ratio, `object-fit: cover`, existing border radius.
-- [ ] Delete the scroll listener and the translateX state that drives it.
-- [ ] Remove the tripled image arrays; show each screenshot once.
-- [ ] Overflow: horizontal touch scroll with hidden scrollbar, or clean clip. No auto-movement.
-- [ ] Tighten vertical padding so the strip feels like a divider, not a section.
+- [x] Reduce to a single row.
+- [x] Thumbnails 120–140px tall, consistent aspect ratio, `object-fit: cover`, existing border radius.
+- [x] Delete the scroll listener and the translateX state that drives it.
+- [x] Remove the tripled image arrays; show each screenshot once.
+- [x] Overflow: horizontal touch scroll with hidden scrollbar, or clean clip. No auto-movement. — *touch/trackpad scroll, hidden scrollbar, soft edge fade; the row is keyboard-focusable as a labelled region.*
+- [x] Tighten vertical padding so the strip feels like a divider, not a section. — *226px tall at 1440 (was ~640px), 176px at 360.*
 
 Checks:
 
-- [ ] Nothing moves when scrolling the page.
-- [ ] No scroll event listener left from this component.
+- [x] Nothing moves when scrolling the page.
+- [x] No scroll event listener left from this component.
 
 Commit: `refactor(strip): replace parallax marquee with static thumbnail strip`
 

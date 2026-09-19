@@ -627,103 +627,60 @@ function HeroSection() {
   );
 }
 
-// ── MarqueeSection ────────────────────────────────────────────────────────────
-const gifImages = [
-  // ResolveIQ
+// ── ScreenshotStrip ───────────────────────────────────────────────────────────
+// A single static row of project screenshots under the hero: each image once,
+// no motion. When the row is wider than the screen it scrolls sideways
+// (swipe / trackpad / shift+wheel) with the scrollbar hidden.
+const stripImages = [
+  // interleaved so the first screenful shows every project
   "/project-images/RE.PNG",
-  "/project-images/RE2.PNG",
-  "/project-images/RE3.PNG",
-  // ME. AI Skin & Scalp
   "/project-images/ME1.PNG",
-  "/project-images/ME-col1a.jpeg",
-  "/project-images/ME-col1b.jpeg",
-  "/project-images/ME-col2.jpeg",
-  // Job Portal System
   "/project-images/Job-Portal-col1a.jpeg",
-  "/project-images/Job-Portal-col1b.jpeg",
-  "/project-images/Job-Portal-col2.jpeg",
-  // Marrow & Hearth Restaurant
   "/project-images/Restaurant-col1a.jpeg",
+  "/project-images/RE2.PNG",
+  "/project-images/ME-col1a.jpeg",
+  "/project-images/Job-Portal-col1b.jpeg",
   "/project-images/Restaurant-col1b.jpeg",
+  "/project-images/RE3.PNG",
+  "/project-images/ME-col1b.jpeg",
+  "/project-images/Job-Portal-col2.jpeg",
   "/project-images/Restaurant-col2.jpeg",
+  "/project-images/ME-col2.jpeg",
 ];
 
-function MarqueeSection() {
-  const sectionRef = useRef(null);
-  const [offset, setOffset] = useState(200);
+const stripStyles = `
+  .strip {
+    background: #0C0C0C;
+    padding: clamp(28px, 4vw, 48px) 0;
+  }
+  .strip-row {
+    display: flex;
+    gap: 12px;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    padding: 0 clamp(16px, 3vw, 48px);
+    scrollbar-width: none;
+    -webkit-mask-image: linear-gradient(to right, transparent 0, #000 24px, #000 calc(100% - 24px), transparent 100%);
+            mask-image: linear-gradient(to right, transparent 0, #000 24px, #000 calc(100% - 24px), transparent 100%);
+  }
+  .strip-row::-webkit-scrollbar { display: none; }
+  .strip-row:focus-visible { outline: 2px solid #D7E2EA; outline-offset: -2px; }
+  .strip-row img {
+    flex-shrink: 0;
+    height: clamp(120px, 9vw, 140px);
+    width: auto;
+    aspect-ratio: 14 / 9;
+    object-fit: cover;
+    border-radius: 16px;
+  }
+`;
 
-  useEffect(() => {
-    const onScroll = () => {
-      if (!sectionRef.current) return;
-      const rect = sectionRef.current.getBoundingClientRect();
-      const sectionTop = window.scrollY + rect.top;
-      const val = (window.scrollY - sectionTop + window.innerHeight) * 0.3;
-      setOffset(val);
-    };
-    window.addEventListener("scroll", onScroll, { passive: true });
-    onScroll();
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
-
-  // Keep both marquee rows populated and rotate ResolveIQ, ME, Job Portal and
-  // Restaurant evenly through each row (three tiles per project) so every
-  // project gets equal presence. The original two-line scroll movement is
-  // unchanged; row 2 starts on Restaurant so it reads early from either side.
-  const row1Base = [
-    gifImages[0], gifImages[3], gifImages[7], gifImages[10],
-    gifImages[1], gifImages[4], gifImages[8], gifImages[11],
-    gifImages[2], gifImages[5], gifImages[9], gifImages[12],
-  ];
-  const row2Base = [
-    gifImages[12], gifImages[2], gifImages[6], gifImages[9],
-    gifImages[10], gifImages[0], gifImages[4], gifImages[8],
-    gifImages[11], gifImages[1], gifImages[5], gifImages[7],
-  ];
-
-  const row1 = [...row1Base, ...row1Base, ...row1Base];
-  const row2 = [...row2Base, ...row2Base, ...row2Base];
-
-  const tileStyle = {
-    width: 336,
-    height: 216,
-    borderRadius: 16,
-    objectFit: "cover",
-    flexShrink: 0,
-  };
-
+function ScreenshotStrip() {
   return (
-    <section
-      ref={sectionRef}
-      style={{
-        background: "#0C0C0C",
-        paddingTop: "clamp(80px,10vw,160px)",
-        paddingBottom: 40,
-        overflow: "hidden",
-      }}
-    >
-      <div
-        style={{
-          display: "flex",
-          gap: 12,
-          marginBottom: 12,
-          transform: `translateX(${offset - 200}px)`,
-          willChange: "transform",
-        }}
-      >
-        {row1.map((src, i) => (
-          <img key={i} src={src} alt="" loading="lazy" style={tileStyle} />
-        ))}
-      </div>
-      <div
-        style={{
-          display: "flex",
-          gap: 12,
-          transform: `translateX(${-(offset - 200)}px)`,
-          willChange: "transform",
-        }}
-      >
-        {row2.map((src, i) => (
-          <img key={i} src={src} alt="" loading="lazy" style={tileStyle} />
+    <section className="strip">
+      <div className="strip-row" role="region" aria-label="Project screenshots" tabIndex={0}>
+        {stripImages.map((src) => (
+          <img key={src} src={src} alt="" loading="lazy" decoding="async" />
         ))}
       </div>
     </section>
@@ -1545,10 +1502,10 @@ function Footer() {
 export default function App() {
   return (
     <>
-      <style>{globalStyles + heroStyles}</style>
+      <style>{globalStyles + heroStyles + stripStyles}</style>
       <div style={{ overflowX: "clip", background: "#0C0C0C" }}>
         <HeroSection />
-        <MarqueeSection />
+        <ScreenshotStrip />
         <AboutSection />
         <ServicesSection />
         <ProjectsSection />
