@@ -127,7 +127,7 @@ function Magnet({ children, padding = 150, strength = 3, maxX = Infinity, maxY =
 function AnimatedText({ text, className = "" }) {
   return (
     <p className={className} style={{
-      color: "#D7E2EA",
+      color: "#0C0C0C",
       fontWeight: 500,
       textAlign: "center",
       lineHeight: 1.6,
@@ -150,8 +150,10 @@ function scrollToSection(e, id) {
   window.history.replaceState(null, "", `#${id}`);
 }
 
-// ── ContactButton — styled to match the GitHub button in AboutSection ─────────
-function ContactButton() {
+// ── ContactButton — styled to match the GitHub button; onLight for white slabs
+function ContactButton({ onLight = false }) {
+  const ink = onLight ? "#0C0C0C" : "#D7E2EA";
+  const hover = onLight ? "rgba(12,12,12,0.06)" : "rgba(215,226,234,0.08)";
   return (
     <a
       href="#contact"
@@ -161,9 +163,9 @@ function ContactButton() {
         alignItems: "center",
         gap: 8,
         borderRadius: "9999px",
-        border: "2px solid #D7E2EA",
+        border: `2px solid ${ink}`,
         background: "transparent",
-        color: "#D7E2EA",
+        color: ink,
         fontFamily: "'Kanit', sans-serif",
         fontWeight: 500,
         textTransform: "uppercase",
@@ -173,7 +175,7 @@ function ContactButton() {
         textDecoration: "none",
         transition: "background 0.2s",
       }}
-      onMouseEnter={(e) => (e.currentTarget.style.background = "rgba(215,226,234,0.08)")}
+      onMouseEnter={(e) => (e.currentTarget.style.background = hover)}
       onMouseLeave={(e) => (e.currentTarget.style.background = "transparent")}
     >
       Contact Me
@@ -480,7 +482,7 @@ const ArrowDownIcon = () => (
 );
 
 function HeroSection() {
-  const navLinks = ["About", "Skills", "Projects", "Contact"];
+  const navLinks = ["Projects", "Skills", "About", "Contact"];
   const [menuOpen, setMenuOpen] = useState(false);
   const heroRef = useRef(null);
   const figureRef = useRef(null);
@@ -726,8 +728,10 @@ function AboutSection() {
         flexDirection: "column",
         alignItems: "center",
         justifyContent: "center",
-        padding: "80px clamp(20px,5vw,40px)",
-        background: "#0C0C0C",
+        padding: "80px clamp(20px,5vw,40px) 120px",
+        background: "#FFFFFF",
+        borderRadius: "60px 60px 0 0",
+        zIndex: 3,
       }}
     >
       {decorImages.map((d, i) => (
@@ -748,8 +752,8 @@ function AboutSection() {
       <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "clamp(32px,5vw,64px)", zIndex: 1 }}>
         <FadeIn delay={0} y={40}>
           <h2
-            className="hero-heading"
             style={{
+              color: "#0C0C0C",
               fontWeight: 900,
               textTransform: "uppercase",
               lineHeight: 1,
@@ -768,7 +772,7 @@ function AboutSection() {
 
         <FadeIn delay={0.2} y={20}>
           <div style={{ display: "flex", gap: 16, flexWrap: "wrap", justifyContent: "center" }}>
-            <ContactButton />
+            <ContactButton onLight />
             <a
               href="https://github.com/hudamasood"
               target="_blank"
@@ -778,9 +782,9 @@ function AboutSection() {
                 alignItems: "center",
                 gap: 8,
                 borderRadius: "9999px",
-                border: "2px solid #D7E2EA",
+                border: "2px solid #0C0C0C",
                 background: "transparent",
-                color: "#D7E2EA",
+                color: "#0C0C0C",
                 fontFamily: "'Kanit', sans-serif",
                 fontWeight: 500,
                 textTransform: "uppercase",
@@ -790,7 +794,7 @@ function AboutSection() {
                 textDecoration: "none",
                 transition: "background 0.2s",
               }}
-              onMouseEnter={(e) => (e.currentTarget.style.background = "rgba(215,226,234,0.08)")}
+              onMouseEnter={(e) => (e.currentTarget.style.background = "rgba(12,12,12,0.06)")}
               onMouseLeave={(e) => (e.currentTarget.style.background = "transparent")}
             >
               <GithubIcon /> GitHub
@@ -836,19 +840,22 @@ function ServicesSection() {
     <section
       id="skills"
       style={{
-        background: "#FFFFFF",
+        background: "#0C0C0C",
         borderRadius: "60px 60px 0 0",
+        marginTop: -40,
+        position: "relative",
+        zIndex: 2,
         padding: "clamp(60px,8vw,128px) clamp(20px,5vw,40px)",
       }}
     >
       <FadeIn delay={0} y={40}>
         <h2
+          className="hero-heading"
           style={{
             fontWeight: 900,
             textTransform: "uppercase",
             textAlign: "center",
             fontSize: "clamp(3rem, 12vw, 160px)",
-            color: "#0C0C0C",
             lineHeight: 1,
             letterSpacing: "-0.02em",
             marginBottom: "clamp(48px,8vw,112px)",
@@ -867,15 +874,15 @@ function ServicesSection() {
                 alignItems: "flex-start",
                 gap: "clamp(12px,3vw,40px)",
                 padding: "clamp(28px,4vw,48px) 0",
-                borderBottom: "1px solid rgba(12,12,12,0.15)",
-                borderTop: i === 0 ? "1px solid rgba(12,12,12,0.15)" : "none",
+                borderBottom: "1px solid rgba(215,226,234,0.15)",
+                borderTop: i === 0 ? "1px solid rgba(215,226,234,0.15)" : "none",
               }}
             >
               <span
                 style={{
                   fontWeight: 900,
                   fontSize: "clamp(3rem, 10vw, 140px)",
-                  color: "#0C0C0C",
+                  color: "#D7E2EA",
                   lineHeight: 1,
                   flexShrink: 0,
                   minWidth: "clamp(60px,10vw,160px)",
@@ -889,7 +896,7 @@ function ServicesSection() {
                     fontWeight: 500,
                     textTransform: "uppercase",
                     fontSize: "clamp(1rem, 2.2vw, 2.1rem)",
-                    color: "#0C0C0C",
+                    color: "#D7E2EA",
                     marginBottom: 8,
                   }}
                 >
@@ -901,7 +908,7 @@ function ServicesSection() {
                     lineHeight: 1.6,
                     maxWidth: 672,
                     fontSize: "clamp(0.85rem, 1.6vw, 1.25rem)",
-                    color: "#0C0C0C",
+                    color: "#D7E2EA",
                     opacity: 0.6,
                   }}
                 >
@@ -1075,18 +1082,17 @@ function ProjectsSection() {
       id="projects"
       ref={containerRef}
       style={{
-        background: "#0C0C0C",
+        background: "#FFFFFF",
         borderRadius: "60px 60px 0 0",
-        marginTop: "clamp(-40px,-4vw,-56px)",
-        zIndex: 10,
+        zIndex: 1,
         position: "relative",
-        padding: "clamp(60px,8vw,128px) clamp(20px,5vw,40px) 80px",
+        padding: "clamp(60px,8vw,128px) clamp(20px,5vw,40px) 120px",
       }}
     >
       <FadeIn delay={0} y={40}>
         <h2
-          className="hero-heading"
           style={{
+            color: "#0C0C0C",
             fontWeight: 900,
             textTransform: "uppercase",
             lineHeight: 1,
@@ -1144,22 +1150,23 @@ function ContactSection() {
     <section
       id="contact"
       style={{
-        background: "#FFFFFF",
+        background: "#0C0C0C",
         borderRadius: "60px 60px 0 0",
+        marginTop: -40,
         padding: "clamp(60px,8vw,128px) clamp(20px,5vw,40px)",
         position: "relative",
-        zIndex: 11,
+        zIndex: 4,
       }}
     >
       {/* CONTACT ME */}
       <FadeIn delay={0} y={40}>
         <h2
+          className="hero-heading"
           style={{
             fontWeight: 900,
             textTransform: "uppercase",
             textAlign: "center",
             fontSize: "clamp(3rem, 12vw, 160px)",
-            color: "#0C0C0C",
             lineHeight: 1,
             letterSpacing: "-0.02em",
             marginBottom: "clamp(18px,2vw,28px)",
@@ -1178,7 +1185,7 @@ function ContactSection() {
             marginBottom: "clamp(50px,7vw,80px)",
             textAlign: "center",
             fontSize: "clamp(1rem,1.8vw,1.4rem)",
-            color: "#0C0C0C",
+            color: "#D7E2EA",
             fontWeight: 500,
             lineHeight: 1.6,
           }}
@@ -1208,7 +1215,7 @@ function ContactSection() {
                 fontSize: "clamp(1.8rem,4vw,3rem)",
                 fontWeight: 800,
                 textTransform: "uppercase",
-                color: "#0C0C0C",
+                color: "#D7E2EA",
                 marginBottom: 30,
                 letterSpacing: "-0.02em",
                 textAlign: "left",
@@ -1258,7 +1265,7 @@ function ContactSection() {
                     display: "flex",
                     alignItems: "center",
                     gap: 12,
-                    color: "#0C0C0C",
+                    color: "#D7E2EA",
                   }}
                 >
                   <span style={{ opacity: 0.5 }}>
@@ -1279,22 +1286,22 @@ function ContactSection() {
                           : undefined
                       }
                       style={{
-                        color: "#0C0C0C",
+                        color: "#D7E2EA",
                         textDecoration: "none",
                         fontWeight: 300,
                         fontSize:
                           "clamp(0.85rem,1.2vw,1.05rem)",
                         borderBottom:
-                          "1px solid rgba(12,12,12,0.15)",
+                          "1px solid rgba(215,226,234,0.2)",
                         transition: "border-color 0.2s",
                       }}
                       onMouseEnter={(e) =>
                         (e.currentTarget.style.borderColor =
-                          "rgba(12,12,12,0.6)")
+                          "rgba(215,226,234,0.6)")
                       }
                       onMouseLeave={(e) =>
                         (e.currentTarget.style.borderColor =
-                          "rgba(12,12,12,0.15)")
+                          "rgba(215,226,234,0.2)")
                       }
                     >
                       {item.text}
@@ -1321,7 +1328,8 @@ function ContactSection() {
           <div
             style={{
               width: "100%",
-              background: "#0C0C0C",
+              background: "rgba(215,226,234,0.04)",
+              border: "1px solid rgba(215,226,234,0.12)",
               borderRadius: 28,
               padding: "clamp(24px,3vw,40px)",
             }}
@@ -1478,6 +1486,7 @@ function Footer() {
 
         <a
           href="#hero"
+          onClick={(e) => scrollToSection(e, "hero")}
           style={{
             display: "inline-flex",
             alignItems: "center",
@@ -1506,9 +1515,9 @@ export default function App() {
       <div style={{ overflowX: "clip", background: "#0C0C0C" }}>
         <HeroSection />
         <ScreenshotStrip />
-        <AboutSection />
-        <ServicesSection />
         <ProjectsSection />
+        <ServicesSection />
+        <AboutSection />
         <ContactSection />
         <Footer />
       </div>
