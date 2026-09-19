@@ -97,17 +97,17 @@ Show me the hero (screenshots at desktop and mobile widths, or tell me to run it
 
 Goal: keep a glimpse of the work under the hero, remove the motion.
 
-- [x] Reduce to a single row.
-- [x] Thumbnails 120–140px tall, consistent aspect ratio, `object-fit: cover`, existing border radius.
-- [x] Delete the scroll listener and the translateX state that drives it.
-- [x] Remove the tripled image arrays; show each screenshot once.
-- [x] Overflow: horizontal touch scroll with hidden scrollbar, or clean clip. No auto-movement. — *touch/trackpad scroll, hidden scrollbar, soft edge fade; the row is keyboard-focusable as a labelled region.*
-- [x] Tighten vertical padding so the strip feels like a divider, not a section. — *226px tall at 1440 (was ~640px), 176px at 360.*
+- [ ] Reduce to a single row.
+- [ ] Thumbnails 120–140px tall, consistent aspect ratio, `object-fit: cover`, existing border radius.
+- [ ] Delete the scroll listener and the translateX state that drives it.
+- [ ] Remove the tripled image arrays; show each screenshot once.
+- [ ] Overflow: horizontal touch scroll with hidden scrollbar, or clean clip. No auto-movement.
+- [ ] Tighten vertical padding so the strip feels like a divider, not a section.
 
 Checks:
 
-- [x] Nothing moves when scrolling the page.
-- [x] No scroll event listener left from this component.
+- [ ] Nothing moves when scrolling the page.
+- [ ] No scroll event listener left from this component.
 
 Commit: `refactor(strip): replace parallax marquee with static thumbnail strip`
 
@@ -117,18 +117,18 @@ Commit: `refactor(strip): replace parallax marquee with static thumbnail strip`
 
 Goal: Hero → strip → Projects → Skills → About → Contact → Footer.
 
-- [x] Reorder components in the root component.
-- [x] Ensure ids: `hero`, `projects`, `skills`, `about`, `contact`. — *all five already existed.*
-- [x] There is no separate Education section. Education is covered inside About. — *nothing to remove.*
-- [x] Update nav links, hero arrow target, footer "Back to top". — *nav and mobile menu now Projects, Skills, About, Contact; the arrow already targeted `#projects`; "Back to top" now uses the same smooth scroll as the nav.*
-- [x] Re-check dark/white alternation in the new order. Target: Hero dark → Projects white → Skills dark → About white → Contact dark → Footer dark. Contact is currently a white slab with a dark form card; invert it (dark section, light text, form card adjusted to stay legible) and separate it from the footer with the existing thin border. Swap section backgrounds and text colours as needed; keep rounded-top corners on white slabs.
-- [x] Re-check any z-index values that assumed the old order (Contact currently sits at a high z-index above the sticky Projects stack). — *old 10/11 values replaced by one step per section: Projects 1, Skills 2, About 3, Contact 4.*
-- [x] Add `scroll-margin-top` to sections so anchored jumps don't hide headings under the nav. — *not needed: the nav lives in the hero and scrolls away, there is no sticky bar to clear. Verified every section's heading lands on screen. See Deviations.*
+- [ ] Reorder components in the root component.
+- [ ] Ensure ids: `hero`, `projects`, `skills`, `about`, `contact`.
+- [ ] There is no separate Education section. Education is covered inside About.
+- [ ] Update nav links, hero arrow target, footer "Back to top".
+- [ ] Re-check dark/white alternation in the new order. Target: Hero dark → Projects white → Skills dark → About white → Contact dark → Footer dark. Contact is currently a white slab with a dark form card; invert it (dark section, light text, form card adjusted to stay legible) and separate it from the footer with the existing thin border. Swap section backgrounds and text colours as needed; keep rounded-top corners on white slabs.
+- [ ] Re-check any z-index values that assumed the old order (Contact currently sits at a high z-index above the sticky Projects stack).
+- [ ] Add `scroll-margin-top` to sections so anchored jumps don't hide headings under the nav.
 
 Checks:
 
-- [x] Every nav link lands on the right section.
-- [x] No two adjacent sections share the same background tone. — *except hero + strip (the strip is a divider inside the hero band) and Contact + Footer (split by the existing thin border, as specified).*
+- [ ] Every nav link lands on the right section.
+- [ ] No two adjacent sections share the same background tone.
 
 Commit: `refactor(layout): reorder sections and update anchors`
 
@@ -251,6 +251,3 @@ Claude Code: record anything that differed from this roadmap here, with a one-li
 - **Bottom scrim added** so the role label and buttons stay legible where they sit over her cardigan on narrow screens.
 - **Role label vs site title.** The hero says "Software Engineer" as specified; the page title, meta description and Skills say "Full Stack Developer". Left as is — flagging in case one should change.
 - **Headings outside the hero render in system-ui, not Kanit.** `index.css` sets `h1, h2 { font-family: var(--heading) }`, which beats the inherited Kanit. The hero heading sets Kanit explicitly; the rest belongs to Phase 5's heading pass.
-- **Dark sections after a white slab overlap it.** Skills and Contact sit 40px up over the slab above with their own rounded top, the technique the site already used, so white shows in their corners instead of a hard straight edge.
-- **About's buttons recoloured for white.** The GitHub button keeps its exact shape and hover, with a dark outline instead of a light one; `ContactButton` gained an `onLight` variant to match it.
-- **No `scroll-margin-top`.** There is no sticky nav (it lives in the hero and scrolls away), so there is nothing for anchored jumps to hide under.
