@@ -42,6 +42,7 @@ const projects = [
   {
     category: "Final Year Project · 2025",
     name: "ME. AI Skin & Scalp System",
+    image: "/project-images/ME-card.jpg",
     desc: "Personalised dermatology platform: a five-stage vision pipeline with an LLM layer, reaching 90%+ accuracy across skin and scalp conditions.",
     tech: ["React", "Django", "MySQL", "EfficientNet-B4", "U-Net", "YOLOv8", "XGBoost", "LLM"],
     link: "https://ai-skin-scalp-personalized-treatmen.vercel.app/",
@@ -49,6 +50,7 @@ const projects = [
   {
     category: "Web Development Project",
     name: "Marrow & Hearth Restaurant",
+    image: "/project-images/Restaurant-cover.webp",
     desc: "Restaurant site built around three kitchens and one hearth — scroll-driven storytelling, a filterable menu and a live reservation flow.",
     tech: ["React", "Vite", "Framer Motion", "Responsive Design", "UI/UX", "Vercel"],
     link: "https://restaurants-sandy-seven.vercel.app/",
@@ -56,6 +58,7 @@ const projects = [
   {
     category: "Full-Stack Project",
     name: "Forge Gym",
+    image: "/project-images/Forge-card.jpg",
     desc: "Premium gym platform: a marketing site, membership and class booking, a full store, and three role-based portals for members, trainers and admins.",
     tech: ["Next.js", "TypeScript", "Tailwind CSS", "PostgreSQL", "Prisma", "Stripe", "Three.js"],
     link: "https://forge-gym-two-psi.vercel.app",
@@ -64,6 +67,7 @@ const projects = [
   {
     category: "Academic Project",
     name: "Job Portal System",
+    image: "/project-images/Job-Portal-card.jpg",
     desc: "Role-based portal for job seekers, employers and admins, with posting, application tracking, messaging and dashboards.",
     tech: ["HTML", "CSS", "JavaScript", "Java", "OOP", "Design Patterns"],
     link: null,
@@ -86,7 +90,7 @@ function UtilityBar() {
           <a key={href} href={href}>{text}</a>
         ))}
       </nav>
-      <span>Price: Free · Always</span>
+      <a href="#contact">Contact</a>
     </div>
   );
 }
@@ -101,16 +105,10 @@ function Masthead() {
 }
 
 function Dateline() {
-  const today = new Date().toLocaleDateString("en-US", {
-    weekday: "long",
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  });
   return (
     <div className="dateline label">
       <span>Vol. I · No. 1</span>
-      <span>{today}</span>
+      <span>Software Engineer</span>
       <span>Portfolio Edition</span>
     </div>
   );
@@ -166,15 +164,12 @@ function Ticker() {
 }
 
 // ── Top Stories ──────────────────────────────────────────────────────────────
-function ProjectCard({ p, index, total }) {
-  const num = String(index + 1).padStart(2, "0");
+function ProjectCard({ p }) {
   return (
     <article className="card">
-      <div className="card-cover" aria-hidden="true">
-        <span className="card-cover-mast">The Huda Herald</span>
-        <span className="card-cover-num">{num}</span>
-        <span className="card-cover-of label">Project {num} of {String(total).padStart(2, "0")}</span>
-      </div>
+      <figure className="card-cover">
+        <img src={p.image} alt={`${p.name} website`} width="1000" height="625" loading="lazy" decoding="async" />
+      </figure>
       <p className="card-kicker label">{p.category}</p>
       <h3 className="card-head">{p.name}</h3>
       <p className="card-desc">{p.desc}</p>
@@ -211,7 +206,7 @@ function TopStories() {
         <span className="label">Section A · Projects</span>
       </div>
       <div className="cards" ref={track} tabIndex={0} role="region" aria-label="Projects, scroll sideways">
-        {projects.map((p, i) => <ProjectCard key={p.name} p={p} index={i} total={projects.length} />)}
+        {projects.map((p) => <ProjectCard key={p.name} p={p} />)}
       </div>
       <div className="cards-nav">
         <button type="button" className="btn btn-secondary" onClick={() => scrollBy(-1)} aria-label="Previous projects">←</button>

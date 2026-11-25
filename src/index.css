@@ -96,6 +96,8 @@ a { color: inherit; }
   border-bottom: 1px solid var(--ink);
   color: var(--ink-muted);
 }
+.utility > a { display: inline-flex; align-items: center; min-height: 44px; color: var(--ink); text-decoration: none; border-bottom: 2px solid transparent; }
+.utility > a:hover { border-bottom-color: var(--accent); }
 .utility nav { display: flex; flex-wrap: wrap; gap: 0 20px; }
 .utility nav a {
   display: inline-flex;
@@ -161,12 +163,13 @@ a { color: inherit; }
   min-width: 0;
   padding-right: clamp(24px, 3vw, 40px);
   border-right: 1px solid var(--ink);
+  container-type: inline-size;
 }
 .hero h1 {
   font-family: var(--font-head);
   font-weight: 900;
   text-transform: uppercase;
-  font-size: clamp(84px, 13.5vw, 210px);
+  font-size: clamp(72px, calc((100cqw - 200px) / 2.6), 210px);
   line-height: 0.86;
   letter-spacing: -0.035em;
 }
@@ -182,6 +185,7 @@ a { color: inherit; }
 .hero-photo { min-width: 0; align-self: start; padding: 7px; }
 .hero-photo img {
   width: 100%;
+  height: auto;
   aspect-ratio: 1 / 1;
   object-fit: cover;
   background: var(--photo-bg);
@@ -274,23 +278,16 @@ a { color: inherit; }
 @media (max-width: 1023px) { .card { flex-basis: calc((100% - 32px) / 2); } }
 @media (max-width: 639px) { .card { flex-basis: 85%; } }
 .card:hover, .card:focus-within { background: var(--paper-light); }
-.card-cover {
+.card-cover { margin-bottom: 16px; }
+.card-cover img {
+  width: 100%;
+  height: auto;
   aspect-ratio: 16 / 10;
-  margin-bottom: 16px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-between;
-  padding: 14px 10px;
-  background: var(--paper-light);
+  object-fit: cover;
+  object-position: top;
+  background: var(--photo-bg);
   border: 1px solid var(--ink);
-  outline: 1px solid var(--ink);
-  outline-offset: -6px;
-  text-align: center;
 }
-.card-cover-mast { font-family: var(--font-mast); font-size: 22px; line-height: 1; }
-.card-cover-num { font-family: var(--font-head); font-weight: 900; font-size: clamp(56px, 6vw, 84px); line-height: 0.9; color: var(--accent); }
-.card-cover-of { color: var(--ink-muted); font-size: 11.5px; padding-top: 6px; border-top: 3px solid var(--ink); align-self: stretch; }
 .card-links { display: flex; flex-wrap: wrap; gap: 10px; }
 .cards-nav { display: flex; gap: 10px; justify-content: flex-end; margin-top: 12px; }
 .card-kicker { color: var(--accent); margin-bottom: 8px; }
